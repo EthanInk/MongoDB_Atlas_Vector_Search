@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  x-api-id: 0d6b1d10-e612-486d-9cb3-8b2668e36efb
+  title: MongoDb Altas Vector Search
+  description: Microservice MongoDb Altas Vector Search to retrieve movies based on prompt
+  version: 0.0.1
+  constact:
+    name: Ethan Kleinlugtenbelt
+    url: WordLift.io
+    email: Ethankleinlugtenbelt@gmail.com
+  x-audience: component-internal
+servers:
+  - url: http://#/v1
+paths:
+  /search:
+    post:
+      summary: Returns a list of movie recomendations.
+      description: >
+        [GET with body payload](https://opensource.zalando.com/restful-api-guidelines/#get-with-body)
+        - no resources created: Returns list of movies using semantic search.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                embeddings:
+                  type: array
+                  items:
+                    type: number
+                    format: double
+                genre_in:
+                  type: array
+                  items:
+                    type: string
+                genre_not_in:
+                  type: array
+                  items:
+                    type: string
+                year_greater_than:
+                  type: string
+                  format: date
+                year_less_then:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          description: A JSON array of movie objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    plot:
+                      type: string
+                    genres:
+                      type: array
+                        items:
+                          type: string
+                    title:
+                      type: string
+                    year:
+                      type: integer
+                    score:
+                      type: number
+                      format: double
+        '400':
+          description: The text or embeded is required.
