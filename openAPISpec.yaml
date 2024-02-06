@@ -41,11 +41,13 @@ paths:
                   items:
                     type: string
                 year_greater_than:
-                  type: string
-                  format: date
+                  type: integer
                 year_less_then:
                   type: string
-                  format: date
+                num_candidates:
+                  type: integer
+                limit:
+                  type: integer
       responses:
         '200':
           description: A JSON array of movie objects.
@@ -69,5 +71,3 @@ paths:
                     score:
                       type: number
                       format: double
-        '400':
-          description: The text or embeded is required.
